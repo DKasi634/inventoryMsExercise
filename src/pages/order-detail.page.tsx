@@ -6,6 +6,7 @@ import { ENDPOINTS } from "@/api/endpoints";
 import BaseButton from "@/components/buttons/base-button.component";
 import { buttonType } from "@/components/buttons/base-button.component";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Spinner from "@/components/spinner.component";
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -45,7 +46,11 @@ const OrderDetail = () => {
   if (error) return <div className="p-4 text-red-500">{error}</div>;
   if (!order) return <div className="p-4">Order not found</div>;
 
-  const total = order.products.reduce((sum, p) => sum + p.price, 0) * order.qty;
+  // Calculate total from order items
+  const total = order.items.reduce(
+    (sum, item) => sum + (item.product_details.price * item.qty),
+    0
+  );
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
@@ -68,11 +73,15 @@ const OrderDetail = () => {
         </div>
 
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">Products</h3>
+          <h3 className="text-lg font-semibold mb-2">Items</h3>
           <ul className="list-disc list-inside">
-            {order.products.map(product => (
-              <li key={product.id}>
-                {product.name} - ${product.price.toFixed(2)}
+            {order.items.map(item => (
+              <li key={item.id} className="flex justify-between">
+                <div>
+                  {item.product_details.name} 
+                  <span className="text-gray-500">(${item.product_details.price.toFixed(2)})</span>
+                </div>
+                <div>Qty: {item.qty}</div>
               </li>
             ))}
           </ul>
@@ -80,11 +89,11 @@ const OrderDetail = () => {
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <p className="text-sm text-gray-500">Quantity</p>
-            <p className="font-semibold">{order.qty}</p>
+            <p className="text-sm text-gray-500">Total Items</p>
+            <p className="font-semibold">{order.items.length}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Total</p>
+            <p className="text-sm text-gray-500">Order Total</p>
             <p className="font-semibold text-green-600">${total.toFixed(2)}</p>
           </div>
         </div>
@@ -116,11 +125,5 @@ const OrderDetail = () => {
     </div>
   );
 };
-
-const Spinner = () => (
-  <div className="flex justify-center items-center h-64">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-  </div>
-);
 
 export default OrderDetail;

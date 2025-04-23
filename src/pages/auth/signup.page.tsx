@@ -106,14 +106,15 @@ const SignUpPage: React.FC = () => {
       setErrors(formErrors);
 
       if (Object.values(formErrors).every((err) => !err)) {
-        // dispatch(registerStart(formData.firstName, formData.userName, formData.email, formData.password, formData.phoneNumber, formData.accountType as UserRole))
+
         axiosConnectionInstance
           .post(ENDPOINTS.REGISTER, {
             email: formData.email,
             user_name: formData.userName,
             password: formData.password
-          }).then(response => {
-            console.log("\nResponse data : ", response.data);
+          }).then((_) => {
+            // We replace the response by an undercore '_' as we're not using it
+            // console.log("\nResponse data : ", _.data);
             navigate("/login")
           })
       }

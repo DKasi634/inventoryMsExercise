@@ -7,7 +7,7 @@ const MainNavigation = () => {
     return (
         <div className="w-full min-h-screen ">
             <Header />
-            <main className="container">
+            <main>
                 <Outlet />
             </main>
             <Footer />

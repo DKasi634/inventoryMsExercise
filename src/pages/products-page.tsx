@@ -6,6 +6,7 @@ import ProductCard from "@/components/product-card.component";
 import { axiosConnectionInstance } from "@/api/utils";
 import { ENDPOINTS } from "../api/endpoints";
 import BaseButton, { buttonType } from "@/components/buttons/base-button.component";
+import Spinner from "@/components/spinner.component";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -27,11 +28,11 @@ const ProductsPage = () => {
     fetchProducts();
   }, []);
 
-  const handleDelete = async (productId: number) => {
+  const handleDelete = async (productUId: string) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axiosConnectionInstance.delete(`${ENDPOINTS.PRODUCTS}${productId}/`);
-        setProducts(products.filter((p) => p.id !== productId));
+        await axiosConnectionInstance.delete(`${ENDPOINTS.PRODUCTS}${productUId}/`);
+        setProducts(products.filter((p) => p.uid !== productUId));
       } catch (err) {
         console.error("Delete failed:", err);
       }
@@ -44,7 +45,7 @@ const ProductsPage = () => {
   return (
     <div className="p-4">
       <div className="mb-4">
-        <BaseButton type={buttonType.blue} rounded={false} >
+        <BaseButton type={buttonType.blue} rounded={false} href="/products/create" >
           <FaPlus className="mr-2" /> Create New Product
         </BaseButton>
       </div>
@@ -62,10 +63,5 @@ const ProductsPage = () => {
   );
 };
 
-const Spinner = () => (
-  <div className="flex justify-center items-center h-64">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-  </div>
-);
 
 export default ProductsPage;

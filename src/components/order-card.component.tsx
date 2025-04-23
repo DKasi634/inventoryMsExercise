@@ -1,4 +1,3 @@
-// src/components/OrderCard.tsx
 import { Order } from "@/api/types";
 import BaseButton from "./buttons/base-button.component";
 import { buttonType } from "./buttons/base-button.component";
@@ -10,10 +9,10 @@ interface OrderCardProps {
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ order, onDelete }) => {
-  const total = order.products.reduce((sum, p) => sum + p.price, 0) * order.qty;
+  const total = order.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border border-black/20">
       <div className="p-4">
         <h3 className="font-semibold mb-2 text-sm">Order #{order.id}</h3>
         <div className="mb-2 text-sm">

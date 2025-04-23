@@ -7,6 +7,7 @@ import OrderCard from "@/components/order-card.component";
 import BaseButton from "../components/buttons/base-button.component";
 import { buttonType } from "../components/buttons/base-button.component";
 import { FaPlus } from "react-icons/fa";
+import Spinner from "@/components/spinner.component";
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -63,10 +64,6 @@ const OrdersPage = () => {
   );
 };
 
-const Spinner = () => (
-  <div className="flex justify-center items-center h-64">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-  </div>
-);
+
 
 export default OrdersPage;

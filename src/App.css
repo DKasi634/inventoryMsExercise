@@ -7,3 +7,25 @@
   font-family: "Poppins", sans-serif;
   font-optical-sizing: auto;
 }
+
+/* App.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Ensure content doesn't overflow behind the sidebar */
+.flex-1 {
+  overflow-y: auto;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .fixed.md\:relative {
+    position: relative !important;
+  }
+
+  .translate-x-full.md\:translate-x-0 {
+    transform: translateX(0) !important;
+  }
+}

@@ -5,9 +5,10 @@ import { Product } from "../api/types";
 import { axiosConnectionInstance } from "@/api/utils";
 import { ENDPOINTS } from "../api/endpoints";
 import ProductForm from "@/components/product-form.component";
+import Spinner from "@/components/spinner.component";
 
 const ProductEdit = () => {
-  const { id } = useParams();
+  const { uid } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ const ProductEdit = () => {
     const fetchProduct = async () => {
       try {
         const response = await axiosConnectionInstance.get(
-          `${ENDPOINTS.PRODUCTS}${id}/`
+          `${ENDPOINTS.PRODUCTS}${uid}/`
         );
         setProduct(response.data);
         setLoading(false);
@@ -27,18 +28,18 @@ const ProductEdit = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [uid]);
 
   const handleSubmit = async (data: Product) => {
     try {
-      await axiosConnectionInstance.put(`${ENDPOINTS.PRODUCTS}${id}/`, data);
-      navigate(`/products/${id}`);
+      await axiosConnectionInstance.put(`${ENDPOINTS.PRODUCTS}${uid}/`, data);
+      navigate(`/products/${uid}`);
     } catch (err) {
       console.error(err);
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><Spinner/></div>;
   if (!product) return <div>Product not found</div>;
 
   return (

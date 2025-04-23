@@ -13,7 +13,7 @@ const Header = () => {
   
   useEffect(() => {
     setAuthTokens(prev => ({ ...prev, access: access_token || '', refresh: refresh_token || "" }))
-    console.log("Access : ", access_token, "\n Refresh : ", refresh_token)
+    // console.log("Access : ", access_token, "\n Refresh : ", refresh_token)
   }, [access_token, refresh_token])
 
 

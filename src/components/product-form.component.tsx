@@ -5,7 +5,7 @@ import BaseButton from "./buttons/base-button.component";
 import { buttonType } from "./buttons/base-button.component";
 
 interface ProductFormProps {
-  initialData?: Product;
+  initialData: Product|null;
   onSubmit: (data: Product) => void;
 }
 
@@ -19,8 +19,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
       name: "",
       price: 0,
       qty: 0,
+      uid:""
     },
   });
+
 
   return (
     <form
